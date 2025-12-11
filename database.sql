@@ -13,8 +13,7 @@ CREATE TABLE `answer_record` (
     PRIMARY KEY (`id`),
     KEY `idx_exam` (`student_exam_id`),
     KEY `idx_question` (`question_id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '作答详细'
-
+) ENGINE = InnoDB  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '作答详细'
 CREATE TABLE `exam` (
     `id` bigint NOT NULL AUTO_INCREMENT,
     `exam_name` varchar(200) NOT NULL COMMENT '考试名称',
@@ -24,13 +23,14 @@ CREATE TABLE `exam` (
     `end_time` datetime NOT NULL,
     `limit_minutes` int NOT NULL COMMENT '限时（分钟）',
     `status` tinyint DEFAULT '0' COMMENT '0未开始 1进行中 2已结束',
+    `paper_show` tinyint DEFAULT '1' COMMENT '考试结束后，考生是否可以查看试卷（0：无法查看 1：可以查看）',
     `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
     `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `is_deleted` tinyint DEFAULT '0',
-    `exam_code` varchar(10) NOT NULL COMMENT '考试码，系统随机生成六位，考生通过输入考试码加入考试',
+    `exam_code` int NOT NULL COMMENT '考试码，系统随机生成六位，考生通过输入考试码加入考试',
     PRIMARY KEY (`id`),
     KEY `idx_creator` (`creator_id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试表'
+) ENGINE = InnoDB  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试表'
 
 CREATE TABLE `exam_question` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -44,7 +44,7 @@ CREATE TABLE `exam_question` (
     PRIMARY KEY (`id`),
     KEY `idx_exam` (`exam_id`),
     KEY `idx_question` (`question_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试与题目关联表'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试与题目关联表'
 
 CREATE TABLE `question` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ CREATE TABLE `question` (
     `is_deleted` tinyint DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `idx_creator` (`creator_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目表'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目表'
 
 CREATE TABLE `question_answer` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -77,7 +77,7 @@ CREATE TABLE `question_option` (
     `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `question_id` (`question_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目选项表（选择）'
+) ENGINE = InnoDB  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目选项表（选择）'
 
 CREATE TABLE `tester_exam` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE `tester_exam` (
     PRIMARY KEY (`id`),
     KEY `idx_exam` (`exam_id`),
     KEY `idx_student` (`student_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试参与者考试详细信息'
+) ENGINE = InnoDB  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '考试参与者考试详细信息'
 
 CREATE TABLE `user` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -106,6 +106,4 @@ CREATE TABLE `user` (
     `is_deleted` tinyint DEFAULT '0' COMMENT '逻辑删除:0正常 1删除',
     `role` int DEFAULT NULL COMMENT '用户身份 1：参与者 2：出题人',
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表'
-
-
+) ENGINE = InnoDB  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表'
